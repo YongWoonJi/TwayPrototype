@@ -1,9 +1,11 @@
 package com.example.jyw.twayprototype;
 
+import android.annotation.TargetApi;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -38,18 +40,29 @@ public class MainActivity extends AppCompatActivity {
         final Drawable homeAsUp = getResources().getDrawable(android.R.drawable.ic_dialog_info);
         newColor.setAlpha(0);
         appbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 float offsetAlpha = (appBarLayout.getY() / appbar.getTotalScrollRange());
 //                imageView.setAlpha( 1 - (offsetAlpha * -1));
-                Log.i("AAAAA", "offsetAlpha값: " + offsetAlpha);
+                Log.i("AAAAA", "offsetAlpha값: " + 150 * offsetAlpha);
                 Log.i("AAAAA", "값: " + (1 - (offsetAlpha * -1)) * 255);
+
+
                 newColor.setAlpha((int)((offsetAlpha * -1) * 255));
                 getSupportActionBar().setBackgroundDrawable(newColor);
+
+
 //                ColorFilter cf = new LightingColorFilter(0, (int)((offsetAlpha * -1) * 255) * 255);
 //                homeAsUp.setColorFilter(cf);
-                int value = (int) (150 * offsetAlpha);
-                homeAsUp.setColorFilter(Color.rgb(value, value, value), PorterDuff.Mode.MULTIPLY);
+                int value;
+                if (((int)(150 * offsetAlpha)) == 0) {
+                    value = -6;
+                } else {
+                    value = (int) (-150 * offsetAlpha);
+                }
+                homeAsUp.setColorFilter(Color.rgb(value, value, value), PorterDuff.Mode.SRC_IN);
+                homeAsUp.setTint(Color.rgb(value, value, value));
 
                 getSupportActionBar().setHomeAsUpIndicator(homeAsUp);
             }
