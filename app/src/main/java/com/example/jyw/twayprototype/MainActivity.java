@@ -2,7 +2,6 @@ package com.example.jyw.twayprototype;
 
 import android.annotation.TargetApi;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -31,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.imageView);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         getSupportActionBar().setTitle(null);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     value = (int) (-150 * offsetAlpha);
                 }
-                homeAsUp.setColorFilter(Color.rgb(value, value, value), PorterDuff.Mode.SRC_IN);
+//                homeAsUp.setColorFilter(Color.rgb(value, value, value), PorterDuff.Mode.SRC_IN);
                 homeAsUp.setTint(Color.rgb(value, value, value));
 
                 getSupportActionBar().setHomeAsUpIndicator(homeAsUp);
