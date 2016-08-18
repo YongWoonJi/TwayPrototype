@@ -16,11 +16,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import java.lang.reflect.Field;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -130,18 +127,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        try {
-            Field declaredFiled = toolbar.getClass().getDeclaredField("mTitleTextView");
-            declaredFiled.setAccessible(true);
-            ImageView logoView = (ImageView) declaredFiled.get(toolbar);
-            ViewGroup.LayoutParams layoutParams = logoView.getLayoutParams();
-            layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Field declaredFiled = toolbar.getClass().getDeclaredField("mTitleTextView");
+//            declaredFiled.setAccessible(true);
+//            ImageView logoView = (ImageView) declaredFiled.get(toolbar);
+//            ViewGroup.LayoutParams layoutParams = logoView.getLayoutParams();
+//            layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+//
+//        } catch (NoSuchFieldException e) {
+//            e.printStackTrace();
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override
