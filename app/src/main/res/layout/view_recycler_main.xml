@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:background="#ffffff">
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/img_tway"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/tway_cicle_logo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="티웨이마케팅"
+        android:id="@+id/text_title"
+        android:layout_alignTop="@+id/img_tway"
+        android:layout_toRightOf="@+id/img_tway"
+        android:layout_toEndOf="@+id/img_tway" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2016/08/17 오후 01:50"
+        android:id="@+id/text_writeTime"
+        android:textSize="10sp"
+        android:textColor="#C9C6B7"
+        android:layout_below="@+id/text_title"
+        android:layout_toRightOf="@+id/img_tway"
+        android:layout_toEndOf="@+id/img_tway" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="[티타임 EPISODE 13]\n\n안녕하세요! 티웨이항공 입니다\n티웨이항공 승무원이 직접 참여하여\n만드는 소소한 컨텐츠..."
+        android:id="@+id/text_content"
+        android:layout_marginTop="18dp"
+        android:layout_below="@+id/text_writeTime"
+        android:layout_alignLeft="@+id/text_writeTime"
+        android:layout_alignStart="@+id/text_writeTime" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@drawable/ic_textsms_black_24dp"
+        android:layout_below="@+id/view_recycler_picture"
+        android:layout_alignLeft="@+id/view_recycler_picture"
+        android:layout_alignStart="@+id/view_recycler_picture"
+        android:layout_marginTop="16dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView3"
+        android:src="@drawable/ic_favorite_border_black_24dp"
+        android:layout_below="@+id/view_recycler_picture"
+        android:layout_alignRight="@+id/view_recycler_picture"
+        android:layout_alignEnd="@+id/view_recycler_picture"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2"
+        android:textSize="14sp"
+        android:id="@+id/text_sms_num"
+        android:gravity="center"
+        android:layout_alignTop="@+id/imageView"
+        android:layout_toRightOf="@+id/imageView"
+        android:layout_toEndOf="@+id/imageView"
+        android:layout_alignBottom="@+id/imageView"
+        android:layout_marginLeft="7dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4"
+        android:textSize="10sp"
+        android:textColor="#C9C6B7"
+        android:id="@+id/text_favorite_num"
+        android:gravity="center"
+        android:layout_below="@+id/imageView3"
+        android:layout_alignRight="@+id/imageView3"
+        android:layout_alignEnd="@+id/imageView3"
+        android:layout_alignLeft="@+id/imageView3"
+        android:layout_alignStart="@+id/imageView3" />
+
+    <View android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#C9C6B7"
+        android:layout_below="@+id/text_favorite_num"
+        android:layout_marginTop="3dp"
+        android:id="@+id/view"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/imageView4"
+        android:src="@drawable/ic_account_circle_black_24dp"
+        android:layout_below="@+id/view"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginRight="18dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="밍밍메구미"
+        android:id="@+id/text_id"
+        android:layout_below="@+id/view"
+        android:layout_toRightOf="@+id/imageView4"
+        android:layout_toEndOf="@+id/imageView4"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이쁜 손톱도 좋지만 너무 길면 승객들이 위험해요..."
+        android:id="@+id/text_message"
+        android:layout_below="@+id/text_id"
+        android:layout_toRightOf="@+id/imageView4"
+        android:layout_toEndOf="@+id/imageView4"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2016/08/18 오후 10:50"
+        android:textColor="#C9C6B7"
+        android:id="@+id/text_message_time"
+        android:layout_alignTop="@+id/text_id"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textSize="10dp"
+        android:layout_marginRight="16dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView5"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_more_vert_black_24dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="20dp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/view_recycler_picture"
+        android:layout_below="@+id/text_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp" />
+
+</RelativeLayout>

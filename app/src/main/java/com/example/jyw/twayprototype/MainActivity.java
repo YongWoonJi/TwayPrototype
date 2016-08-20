@@ -5,12 +5,17 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -29,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     ImageView logo_t, logo_quotation, logo_way;
     ImageView rightIcon;
     ViewPager viewPager;
+    RecyclerView recyclerView;
+    RecyclerViewAdapter mAdapter;
 
     private List<String> numberList;
 
@@ -37,6 +44,21 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAB1 = "tab1";
     private static final String TAB2 = "tab2";
     private static final String TAB3 = "tab3";
+
+    private static final int MESSAGE_BACK_KEY_TIMEOUT = 1;
+    private static final int TIMEOUT_TIME = 2000;
+
+    Handler mHandler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case MESSAGE_BACK_KEY_TIMEOUT:
+                    isBackPressd = false;
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                     b = (int) (255 - (-206 * offsetAlpha));
                 }
 //                homeAsUp.setColorFilter(Color.rgb(value, value, value), PorterDuff.Mode.SRC_IN);
-                homeAsUp.setColorFilter(Color.rgb(value, value, value), PorterDuff.Mode.MULTIPLY);
+                homeAsUp.setColorFilter(Color.rgb(value, value, value), PorterDuff.Mode.SRC_IN);
 
                 logo_t.setColorFilter(Color.rgb(r, g, b));
                 logo_way.setColorFilter(Color.rgb(r, g, b));
@@ -175,6 +197,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    boolean isBackPressd = false;
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        if (!isBackPressd) {
+            Toast.makeText(MainActivity.this, R.string.back_press, Toast.LENGTH_SHORT).show();
+            isBackPressd = true;
+            mHandler.sendEmptyMessageDelayed(MESSAGE_BACK_KEY_TIMEOUT, TIMEOUT_TIME);
+        } else {
+            mHandler.removeMessages(MESSAGE_BACK_KEY_TIMEOUT);
+            finish();
+        }
+    }
+
     private void initLayout() {
         appbar = (AppBarLayout) findViewById(R.id.appbar);
         logo_t = (ImageView) findViewById(R.id.logo_t);
@@ -182,10 +218,23 @@ public class MainActivity extends AppCompatActivity {
         logo_way = (ImageView) findViewById(R.id.logo_way);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         circleAnimIndicator = (CircleAnimIndicator) findViewById(R.id.circleAnimIndicator);
+        recyclerView = (RecyclerView) findViewById(R.id.rv_view);
     }
 
     private void init() {
         initViewPager();
+        initRecyclerView();
+    }
+
+    private void initRecyclerView() {
+        mAdapter = new RecyclerViewAdapter(this);
+        recyclerView.setAdapter(mAdapter);
+
+        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(manager);
+
+        DividerItemDecoration decoration = new DividerItemDecoration();
+        recyclerView.addItemDecoration(decoration);
     }
 
     private void initViewPager() {
