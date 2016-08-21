@@ -9,15 +9,16 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,16 +27,20 @@ import android.widget.Toast;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NaviFragment.OnMenuSelectListener {
 
     TabLayout tabs;
-    CollapsingToolbarLayout collapsing_toolbar;
     AppBarLayout appbar;
     ImageView logo_t, logo_quotation, logo_way;
     ImageView rightIcon;
     ViewPager viewPager;
     RecyclerView recyclerView;
     RecyclerViewAdapter mAdapter;
+    DrawerLayout drawer;
+
+
+    ColorDrawable newColor;
+    Drawable homeAsUp;
 
     private List<String> numberList;
 
@@ -77,76 +82,23 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
 
 
-        final ColorDrawable newColor = new ColorDrawable(getResources().getColor(android.R.color.white));
-        final Drawable homeAsUp = getResources().getDrawable(R.drawable.ic_menu_white_24dp);
-//        final Drawable rightIcon = ContextCompat.getDrawable(this, android.R.drawable.ic_dialog_alert);
-        newColor.setAlpha(0);
         appbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                float offsetAlpha = (appBarLayout.getY() / appbar.getTotalScrollRange());
-//                imageView.setAlpha( 1 - (offsetAlpha * -1));
-                Log.i("AAAAA", "offset계산값: " + (255 - (-130 * offsetAlpha)) + " , offset: " + offsetAlpha);
-                Log.i("AAAAA", "값: " + (1 - (offsetAlpha * -1)) * 255);
+                float offset = (appBarLayout.getY() / appbar.getTotalScrollRange());
 
-
-                newColor.setAlpha((int)((offsetAlpha * -1) * 255));
+                newColor.setAlpha((int)((offset * -1) * 255));
                 getSupportActionBar().setBackgroundDrawable(newColor);
 
-
-//                ColorFilter cf = new LightingColorFilter(0, (int)((offsetAlpha * -1) * 255) * 255);
-//                homeAsUp.setColorFilter(cf);
-                int value;
-                int r, g, b;
-                if (((int)(255 - (-130 * offsetAlpha))) == 0) {
-                    value = 255;
-                    r = g = b = 255;
-                } else {
-                    value = (int) (255 - (-130 * offsetAlpha));
-                    r = (int) (255 - (-48 * offsetAlpha));
-                    g = (int) (255 - (-206 * offsetAlpha));
-                    b = (int) (255 - (-206 * offsetAlpha));
-                }
-//                homeAsUp.setColorFilter(Color.rgb(value, value, value), PorterDuff.Mode.SRC_IN);
-                homeAsUp.setColorFilter(Color.rgb(value, value, value), PorterDuff.Mode.SRC_IN);
-
-                logo_t.setColorFilter(Color.rgb(r, g, b));
-                logo_way.setColorFilter(Color.rgb(r, g, b));
-
-                if (offsetAlpha == 0) {
-                    r = 190;
-                    g = 190;
-                    b = 190;
-                } else {
-                    r = (int) (190 - (-190 * offsetAlpha));
-                    g = (int) (190 + (-10 * offsetAlpha));
-                    b = (int) (190 - (-190 * offsetAlpha));
-                    Log.i("AAAAA", "R, B : " + r);
-                }
-                logo_quotation.setColorFilter(Color.rgb(r, g, b));
-
-
-                if (rightIcon != null) {
-                    rightIcon.setColorFilter(Color.rgb(value, value, value));
-                }
-
-                getSupportActionBar().setHomeAsUpIndicator(homeAsUp);
+                changeToolbarIconsColor(offset);
             }
         });
-
-
-        collapsing_toolbar = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
-//        collapsing_toolbar.setTitle("안녕?");
-//        collapsing_toolbar.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
-//        collapsing_toolbar.setContentScrimColor(getResources().getColor(R.color.colorPrimary));
-        collapsing_toolbar.setStatusBarScrimColor(getResources().getColor(R.color.colorAccent));
 
 
         tabs = (TabLayout) findViewById(R.id.tabs);
         tabs.addTab(tabs.newTab().setIcon(R.drawable.ic_flight_takeoff_white_24dp).setText("항공권 예매").setTag(TAB1));
         tabs.addTab(tabs.newTab().setIcon(R.drawable.ic_card_giftcard_white_24dp).setText("이벤트").setTag(TAB2));
-        tabs.addTab(tabs.newTab().setIcon(R.drawable.ic_schedule_white_24dp).setText("운항 스케쥴").setTag(TAB3));
+        tabs.addTab(tabs.newTab().setIcon(R.drawable.ic_schedule_white_24dp).setText("운항 스케줄").setTag(TAB3));
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -170,9 +122,20 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                switch (tab.getPosition()) {
+                    case 0:
+                        Toast.makeText(MainActivity.this, "tab1", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1:
+                        Toast.makeText(MainActivity.this, "tab2", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 2:
+                        Toast.makeText(MainActivity.this, "tab3", Toast.LENGTH_SHORT).show();
+                        break;
+                }
             }
         });
+
 
 
 //        try {
@@ -188,20 +151,55 @@ public class MainActivity extends AppCompatActivity {
 //            e.printStackTrace();
 //        }
 
-        int id_home = getResources().getIdentifier("home", "id", "android.support.v7.appcompat");
-        ImageView iv = (ImageView) findViewById(android.support.v7.appcompat.R.id.home);
-        Log.i("AAAAA", "iv = " + iv);
-        if (iv != null) {
-            iv.setPadding(0, 0, 0, 0);
+//        int id_home = getResources().getIdentifier("home", "id", "android.support.v7.appcompat");
+//        ImageView iv = (ImageView) findViewById(android.support.v7.appcompat.R.id.home);
+//        Log.i("AAAAA", "iv = " + iv);
+//        if (iv != null) {
+//            iv.setPadding(0, 0, 0, 0);
+//        }
+    }
+
+    private void changeToolbarIconsColor(float offset) {
+        int value;
+        int r, g, b;
+        if (((int)(255 - (-130 * offset))) == 0) {
+            value = 255;
+            r = g = b = 255;
+        } else {
+            value = (int) (255 - (-130 * offset));
+            r = (int) (255 - (-48 * offset));
+            g = (int) (255 - (-206 * offset));
+            b = (int) (255 - (-206 * offset));
+        }
+        homeAsUp.setColorFilter(Color.rgb(value, value, value), PorterDuff.Mode.SRC_IN);
+        getSupportActionBar().setHomeAsUpIndicator(homeAsUp);
+
+        if (rightIcon != null) {
+            rightIcon.setColorFilter(Color.rgb(value, value, value));
         }
 
+        logo_t.setColorFilter(Color.rgb(r, g, b));
+        logo_way.setColorFilter(Color.rgb(r, g, b));
+
+        if (offset == 0) {
+            r = 190;
+            g = 190;
+            b = 190;
+        } else {
+            r = (int) (190 - (-190 * offset));
+            g = (int) (190 + (-10 * offset));
+            b = (int) (190 - (-190 * offset));
+        }
+        logo_quotation.setColorFilter(Color.rgb(r, g, b));
     }
 
     boolean isBackPressd = false;
     @Override
     public void onBackPressed() {
 //        super.onBackPressed();
-        if (!isBackPressd) {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else if (!isBackPressd) {
             Toast.makeText(MainActivity.this, R.string.back_press, Toast.LENGTH_SHORT).show();
             isBackPressd = true;
             mHandler.sendEmptyMessageDelayed(MESSAGE_BACK_KEY_TIMEOUT, TIMEOUT_TIME);
@@ -219,12 +217,17 @@ public class MainActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         circleAnimIndicator = (CircleAnimIndicator) findViewById(R.id.circleAnimIndicator);
         recyclerView = (RecyclerView) findViewById(R.id.rv_view);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     }
 
     private void init() {
         initViewPager();
         initRecyclerView();
+
+        newColor = new ColorDrawable(Color.rgb(255, 255, 255));
+        homeAsUp = ContextCompat.getDrawable(this, R.drawable.ic_menu_white_24dp);
     }
+
 
     private void initRecyclerView() {
         mAdapter = new RecyclerViewAdapter(this);
@@ -271,5 +274,25 @@ public class MainActivity extends AppCompatActivity {
         rightIcon = (ImageView) view.findViewById(R.id.imageView2);
 
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home :
+                if (drawer.isDrawerOpen(GravityCompat.START)) {
+                    drawer.closeDrawer(GravityCompat.START);
+                } else {
+                    drawer.openDrawer(GravityCompat.START);
+                }
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onMenuSelected(int menuId) {
+
     }
 }

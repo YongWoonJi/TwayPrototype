@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.example.jyw.twayprototype.data.EventData;
 
@@ -39,11 +41,33 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return VIEW_TYPE_MAIN_VIEWHOLDER;
     }
 
+
+    FrameLayout searchContainer;
+    TextView cancelView;
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         switch (viewType) {
             case VIEW_TYPE_HEADER: {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_recycler_main_search, parent, false);
+                searchContainer = (FrameLayout) view.findViewById(R.id.search_container);
+                searchContainer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (searchContainer.getVisibility() == View.VISIBLE) {
+                            searchContainer.setVisibility(View.GONE);
+                        }
+                    }
+                });
+                cancelView = (TextView) view.findViewById(R.id.text_cancel);
+                cancelView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (searchContainer.getVisibility() == View.GONE) {
+                            searchContainer.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
                 MainSearchViewHolder holder = new MainSearchViewHolder(view);
                 return holder;
             }
@@ -124,4 +148,5 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public int getItemCount() {
         return 5;
     }
+
 }
