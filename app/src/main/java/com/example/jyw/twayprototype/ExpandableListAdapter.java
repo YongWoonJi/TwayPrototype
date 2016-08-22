@@ -80,6 +80,7 @@ public class ExpandableListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 if (!groupItem.isHaveChild) {
                     nvh.toggleImageView.setVisibility(View.GONE);
                 } else {
+                    nvh.toggleImageView.setVisibility(View.VISIBLE);
                     nvh.layout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -137,6 +138,7 @@ public class ExpandableListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 if (!childItem.isHaveChild) {
                     cvh.toggleImageView.setVisibility(View.GONE);
                 } else {
+                    cvh.toggleImageView.setVisibility(View.VISIBLE);
                     cvh.layout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
