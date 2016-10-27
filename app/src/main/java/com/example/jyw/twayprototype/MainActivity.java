@@ -297,7 +297,6 @@ public class MainActivity extends AppCompatActivity implements NaviFragment.OnMe
                     drawer.openDrawer(GravityCompat.START);
                 }
                 return true;
-
         }
 
         return super.onOptionsItemSelected(item);
