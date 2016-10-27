@@ -104,13 +104,13 @@ public class MainActivity extends AppCompatActivity implements NaviFragment.OnMe
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
                     case 0:
-                        Toast.makeText(MainActivity.this, "tab1", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "항공권예매", Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
-                        Toast.makeText(MainActivity.this, "tab2", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "이벤트", Toast.LENGTH_SHORT).show();
                         break;
                     case 2:
-                        Toast.makeText(MainActivity.this, "tab3", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "운항스케줄", Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
@@ -124,18 +124,17 @@ public class MainActivity extends AppCompatActivity implements NaviFragment.OnMe
             public void onTabReselected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
                     case 0:
-                        Toast.makeText(MainActivity.this, "tab1", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "항공권예매", Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
-                        Toast.makeText(MainActivity.this, "tab2", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "이벤트", Toast.LENGTH_SHORT).show();
                         break;
                     case 2:
-                        Toast.makeText(MainActivity.this, "tab3", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "운항스케줄", Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
         });
-
 
 
 //        try {
@@ -199,6 +198,8 @@ public class MainActivity extends AppCompatActivity implements NaviFragment.OnMe
 //        super.onBackPressed();
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if (drawer.isDrawerOpen(GravityCompat.END)) {
+            drawer.closeDrawer(GravityCompat.END);
         } else if (!isBackPressd) {
             Toast.makeText(MainActivity.this, R.string.back_press, Toast.LENGTH_SHORT).show();
             isBackPressd = true;
@@ -272,6 +273,16 @@ public class MainActivity extends AppCompatActivity implements NaviFragment.OnMe
         MenuItem item = menu.findItem(R.id.item1);
         View view = MenuItemCompat.getActionView(item);
         rightIcon = (ImageView) view.findViewById(R.id.imageView2);
+        rightIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (drawer.isDrawerOpen(GravityCompat.END)) {
+                    drawer.closeDrawer(GravityCompat.END);
+                } else {
+                    drawer.openDrawer(GravityCompat.END);
+                }
+            }
+        });
 
         return true;
     }

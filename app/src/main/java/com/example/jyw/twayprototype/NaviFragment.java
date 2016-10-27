@@ -49,7 +49,7 @@ public class NaviFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         List<NaviItem> data = new ArrayList<>();
-        Context context = getContext();
+        Context context = getActivity();
 
         NaviItem header = new NaviItem();
         header.type = HEADER;
@@ -231,7 +231,7 @@ public class NaviFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_navi, container, false);
         rv_list = (RecyclerView) view.findViewById(R.id.rv_navi);
-        rv_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        rv_list.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         rv_list.setAdapter(mAdapter);
 
         return view;
